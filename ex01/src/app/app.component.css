@@ -1,0 +1,13 @@
+.content{
+    width: 40rem;
+}
+
+form{
+    background: rgb(243, 243, 243);
+    padding: 1rem;
+    margin: 2rem 0 2rem 0;
+}
+
+app-article-list{
+    margin: 2rem 0 0 0 ;
+}
