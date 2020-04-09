@@ -2,7 +2,7 @@
 
 Homework  of  Angular
 
-# 编译命令 ng build --prod --output-path ../docs/ex0x --base-href Angular
+# 编译命令 ng build --prod --output-path ../docs/ex0x --base-href /Angular/ex0x/
 
 # update  History
 
