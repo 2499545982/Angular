@@ -32,4 +32,8 @@ export class AppComponent
                 29.99)
         ];
     }
+    onSelect(product:Product)
+    {
+        console.log(product.name+"选中");
+    }
 }

@@ -1,0 +1,10 @@
+.product-name{
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0.8rem 0 ;
+}
+.description{
+    font-size: 0.9rem;
+    color: gray;
+    margin: 0 0.5rem;
+}

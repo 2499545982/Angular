@@ -1,1 +1,3 @@
-<products-list [productslist]="products"></products-list>
+<div class="d-flex justify-content-center">
+    <products-list [productslist]="products"(clicked)="onSelect($event)"></products-list>
+</div>
