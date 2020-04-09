@@ -1,27 +1,35 @@
 import { Component } from '@angular/core';
+import { Product } from './product';
 
 @Component({
-    selector: 'app-root',
+    selector: 'inventory-app',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
 export class AppComponent
 {
-    title:string;
-    img:string;
-    a:string;
+    products: Product[];
     constructor()
     {
-        this.a='https://1199911.xyz';
-        this.title=' ex02 ';
-        this.img='https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1508309517,2452018733&fm=26&gp=0.jpg';
-    }
-    click()
-    {
-        console.log('asddsadasdasdsa');
-    }
-    input(e:Event)
-    {
-        this.title=(<HTMLInputElement>e.target).value;
+        this.products = [
+            new Product(
+                'MYSHOES',
+                'Black Running Shoes',
+                '../assets/image/products/black-shoes.jpg',
+                ['Men', 'Shoes', 'Running Shoes'],
+                109.99),
+            new Product(
+                'NEATOJACKET',
+                'Blue Jacket',
+                '../assets/image/products/blue-jacket.jpg',
+                ['Women', 'Apparel', 'Jackets & Vests'],
+                238.99),
+            new Product(
+                'NICEHAT',
+                'A Nice Black Hat',
+                '../assets/image/products/black-hat.jpg',
+                ['Men', 'Accessories', 'Hats'],
+                29.99)
+        ];
     }
 }

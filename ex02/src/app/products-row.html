@@ -1,0 +1,17 @@
+<div>
+    <products-image [url]="product.imageUrl"></products-image>
+</div>
+<div>
+    <div>
+        {{product.name}}
+    </div>
+    <div>
+        SKU #{{product.sku}}
+    </div>
+    <div>
+        <products-part [department]="product.department"></products-part>
+    </div>
+</div>
+<div>
+    <products-price [price]="product.price"></products-price>
+</div>
