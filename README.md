@@ -14,5 +14,5 @@ Homework  of  Angular
 
 4-16 update ex04 bootstrap web
 
-4-16 update ex05 about Angular ngClass ngStyle is_switch selecter 
+4-16 update ex05 about Angular ngClass ngStyle ngFor ngSwitch 
 
