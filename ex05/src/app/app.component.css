@@ -1,0 +1,10 @@
+.bordered{
+    border:1px dashed black;
+    background-color: rgb(255, 255, 255);
+}
+.pink{
+    color: pink;
+}
+.round{
+    border-radius: 10px;
+}
