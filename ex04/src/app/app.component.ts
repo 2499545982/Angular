@@ -10,4 +10,10 @@ export class AppComponent
 {
     menus = MENUS;
     products = PRODUCTS;
+    cl(i: number)
+    {
+        console.log(i);
+        if (i === 0) return ['btn', 'btn-lg', 'btn-block', 'btn-outline-primary'];
+        return ['btn', 'btn-lg', 'btn-block', 'btn-primary']; //
+    }
 }

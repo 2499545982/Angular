@@ -26,7 +26,7 @@
                 <ul class="list-unstyled mt-3 mb-4">
                     <li *ngFor='let feature of product.features'>{{feature}}</li>
                 </ul>
-                <button type="button" [ngClass]='i==1' class="btn btn-lg btn-block btn-outline-primary">{{product.action}}</button>
+                <button type="button" [ngClass]='cl(i)' >{{product.action}}</button>
             </div>
         </div>
     </div>
