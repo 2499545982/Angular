@@ -32,6 +32,6 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary btn-block" [ngClass]="{'disabled':myForm.invalid}"
-            disabled:myForm.invalid>提交</button>
+            [disabled]="myForm.invalid">提交</button>
     </form>
 </div>
