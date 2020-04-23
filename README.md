@@ -16,3 +16,5 @@ Homework  of  Angular
 
 4-16 update ex05 about Angular ngClass ngStyle ngFor ngSwitch 
 
+4-23 ch05 done
+
