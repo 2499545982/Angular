@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex06</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        html,
+        body {
+            font-size: 15px;
+        }
+
+        form {
+            width: 30rem;
+        }
+
+        .login-content{
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="d-flex align-items-center login-content">
+            <form>
+                <h3 class="d-flex justify-content-center">用户登录</h3>
+                <div class="form-group">
+                    <label for="userName">用户名</label>
+                    <input type="text" class="form-control is-invalid" id="userName" aria-describedby="输入用户名"
+                        name="userName">
+                    <div class="valid-feedback">
+                        用户名格式正确
+                    </div>
+                    <div class="invalid-feedback">
+                        用户名不可用
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control is-valid" id="password" name="password">
+                    <div class="valid-feedback">
+                        密码可用
+                    </div>
+                    <div class="invalid-feedback">
+                        密码必须>5位
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">提交</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
