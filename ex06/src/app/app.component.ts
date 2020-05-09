@@ -19,9 +19,7 @@ function pd(control: FormControl): { [s: string]: boolean }
 export class AppComponent
 {
     title = 'ex06';
-
     myForm: FormGroup;
-
     userName: AbstractControl;
     name$: Observable<string>;
     password: AbstractControl;
