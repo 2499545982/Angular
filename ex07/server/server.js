@@ -1,31 +1,28 @@
 "use strict";
 const express = require('express');
 const app = express();
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-var USERS = [
-    {
-        id: '01', userName: 'asdasf', password: 'asdewfgqwft'
-    },
-    {
-        id: '02', userName: 'as12342rdsg', password: '12423543'
-    }
+
+const USERS = [
+    { id: '01', userName: 'admin', password: '123456' },
+    { id: '02', userName: 'aaa', password: '456789' }
 ];
 
-app.all('*', function (req, res, next) 
+app.all('*', function (req, res, next)
 {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By", ' 3.2.1');
-    if (req.method == "OPTIONS") res.send(200); 
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Headers", 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With');
+    res.header("Access-Control-Allow-Methods", 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header("x-Powered-By", '3.2.1')
+    if (req.method == "OPTIONS") res.send(200);
     else next();
-});
-
+})
 
 app.get('/hello', function (req, resp)
 {
-    resp.send('asfddsf');
+    resp.send('哈哈哈');
     resp.end();
 });
 
@@ -50,13 +47,7 @@ app.get('/users/:id', function (req, resp)
     resp.end();
 });
 
-app.post('/user/:id/:userName/:password', function (req, resp)
-{
-    console.log(req.params);
-    resp.end();
-
-});
-
+//添加用户
 app.post('/user', function (req, resp)
 {
     USERS.push(req.body);
@@ -64,50 +55,60 @@ app.post('/user', function (req, resp)
     resp.end();
 });
 
-//修改
+//修改用户
 app.put('/user', function (req, resp)
 {
-    let found = false;
-    for (const user of USERS)
+    let founded = false;
+    for (let user of USERS)
     {
         if (user.id === req.body.id)
         {
             user.userName = req.body.userName;
             user.password = req.body.password;
-            found = true;
+            founded = true;
             break;
         }
     }
-    USERS.push(req.body);
-    if (found)
+
+    if (founded)
+    {
         resp.send({ succ: true });
-    else resp.send({ succ: false, msg: 'not found!' });
+    }
+    else
+    {
+        resp.send({ succ: false, msg: '没有找到用户!' });
+    }
     resp.end();
 });
-//delete
+
+//删除用户
 app.delete('/user/:id', function (req, resp)
 {
-    let found = false;
+    let founded = false;
     let index = 0;
-    for (const user of USERS)
+    for (let user of USERS)
     {
         if (user.id === req.params.id)
         {
-            USERS.splice(index, 1);
-            found = true;
-            //break;
+            USERS.splice(index, 1)
+            founded = true;
+            break;
         }
         index++;
     }
-    if (found)
-        resp.send({ succ: true, msg: 'delete success !' });
-    else resp.send({ succ: false, msg: 'not found!' });
+
+    if (founded)
+    {
+        resp.send({ succ: true });
+    }
+    else
+    {
+        resp.send({ succ: false, msg: '没有找到用户!' });
+    }
     resp.end();
 });
 
-
-
 app.listen(8080, function ()
 {
-    console.log('8080\ndone!');
+    console.log('服务器在8080端口启动!');
 });

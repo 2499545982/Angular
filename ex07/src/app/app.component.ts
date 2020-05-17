@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user';
@@ -26,10 +26,12 @@ export class AppComponent implements OnInit
             'password': [''],
             'id': ['']
         });
+
         this.userName = this.myForm.controls['userName'];
         this.id = this.myForm.controls['id'];
         this.password = this.myForm.controls['password'];
     }
+
     ngOnInit(): void
     {
         this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
@@ -49,16 +51,14 @@ export class AppComponent implements OnInit
     add()
     {
         console.log(this.myForm.value);
-        this.httpClient.post(this.baseUrl + 'user',
-            this.myForm.value).subscribe(
-                (val: any) =>
+        this.httpClient.post(this.baseUrl + 'user', this.myForm.value).subscribe(
+            (val: any) =>
+            {
+                if (val.succ)
                 {
-                    if (val.succ)
-                    {
-                        alert('添加成功!');
-                    }
+                    alert('添加成功!');
                 }
-            );
+            })
     }
 
     select(u: User)
@@ -71,7 +71,7 @@ export class AppComponent implements OnInit
     {
         if (!this.currentUser)
         {
-            alert('必须先选择用户!');
+            alert('必须选择用户！');
         }
         else
         {
@@ -80,7 +80,7 @@ export class AppComponent implements OnInit
                 {
                     if (val.succ)
                     {
-                        alert('删除成功!');
+                        alert('删除成功！');
                     }
                 }
             )
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit
     {
         if (!this.currentUser)
         {
-            alert('必须先选择用户!');
+            alert('必须选择用户！');
         }
         else
         {
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit
                 {
                     if (val.succ)
                     {
-                        alert('修改成功!');
+                        alert('修改成功！');
                     }
                 }
             )
