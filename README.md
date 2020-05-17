@@ -18,3 +18,5 @@ Homework  of  Angular
 
 4-23 ch05 done
 
+5-17 ex07 ex08 done !
+
