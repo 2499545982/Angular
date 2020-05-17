@@ -43,7 +43,7 @@ app.get('/users/:id', function (req, resp)
     {
         if (user.id === id)
         {
-            resp.send(user);
+            resp.send([user]);
             break;
         }
     }
