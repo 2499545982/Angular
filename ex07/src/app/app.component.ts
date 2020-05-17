@@ -46,6 +46,7 @@ export class AppComponent implements OnInit
         {
             this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
         }
+        location.reload();
     }
 
     add()
@@ -58,7 +59,8 @@ export class AppComponent implements OnInit
                 {
                     alert('添加成功!');
                 }
-            })
+            });
+        location.reload();
     }
 
     select(u: User)
@@ -85,6 +87,7 @@ export class AppComponent implements OnInit
                 }
             )
         }
+        location.reload();
     }
 
     update()
@@ -105,5 +108,6 @@ export class AppComponent implements OnInit
                 }
             )
         }
+        location.reload();
     }
 }
