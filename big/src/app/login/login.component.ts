@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { Router } from '@angular/router'
 function pd(control: FormControl): { [s: string]: boolean }
 {
-    if (!control.value.match(/^a/))
+    if (!control.value.match(/[a-zA-Z]/))
     {
         return { invalidUser: true };
     }
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit
         this.a2 = 0;
         this.myForm = this.fb.group({
             'userName': ['asdasd', Validators.compose([Validators.required, pd])],
-            'password': ['asdasd', Validators.compose([Validators.required, Validators.minLength(5)])]
+            'password': ['asdasd', Validators.compose([Validators.required, Validators.minLength(4)])]
         });
 
         this.userName = this.myForm.controls['userName'];

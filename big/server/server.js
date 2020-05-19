@@ -10,6 +10,11 @@ const USERS = [
     { id: '02', userName: 'aaa', password: '456789' }
 ];
 
+const admin = [
+    {  userName: 'admin', password: '123456' },
+    {  userName: 'root', password: 'root' }
+];
+
 app.all('*', function (req, res, next)
 {
     res.header("Access-Control-Allow-Origin", '*');

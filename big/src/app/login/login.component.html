@@ -16,7 +16,7 @@
                         用户名不可用
                     </span>
                     <span *ngIf="!userName.hasError('required') && userName.hasError('invalidUser')">
-                        用户名必须以a开头
+                        用户名必须字母开头
                     </span>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     密码可用
                 </div>
                 <div class="invalid-feedback">
-                    密码必须>5位
+                    密码必须>4位
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block" [ngClass]="{'disabled':myForm.invalid}"
