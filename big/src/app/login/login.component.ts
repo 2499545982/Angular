@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl, Validators, Form, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
-
+import { HttpClient } from "@angular/common/http";
+import { Router } from '@angular/router'
 function pd(control: FormControl): { [s: string]: boolean }
 {
     if (!control.value.match(/^a/))
@@ -29,11 +30,12 @@ export class LoginComponent implements OnInit
     password: AbstractControl;
     a1: number;
     a2: number;
+    baseUrl = 'http://127.0.0.1:8000/';
     onSubmit(value: any)
     {
         console.log(value);
     }
-    constructor(private fb: FormBuilder,private authService: AuthService)
+    constructor(private fb: FormBuilder, private authService: AuthService, private http: HttpClient, private router: Router)
     {
         this.a1 = 0;
         this.a2 = 0;
@@ -51,8 +53,26 @@ export class LoginComponent implements OnInit
         });
     }
 
-    login()
+    login(): void
     {
-        this.authService.login();
+        console.log(this.myForm.value);
+
+        this.http.post(this.baseUrl + 'check', this.myForm.value).subscribe(
+            (val: any) =>
+            {
+                // console.log(val.succ === 'true');
+                // this.router.navigate(['/management'], { replaceUrl: val.succ === 'true' });
+                // if (val.succ === 'true')
+                // {
+                //     alert('登陆成功!');
+                // }
+                // else
+                // {
+                //     alert('账号或密码错误!');
+                //     return;
+                // }
+                if (this.authService.login(val))
+                    this.router.navigate(['./management']);
+            });
     }
 }

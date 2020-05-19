@@ -10,12 +10,25 @@ import { ExitComponent } from './exit/exit.component';
 import { LoginGuard } from './login.guard';
 import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './user/user.component';
+import { SourceComponent } from './source/source.component';
+
+const mgtChildrenRoutes: Routes = [
+    { path: 'user', component: UserComponent },
+    { path: 'source', component: SourceComponent },
+    { path: '', redirectTo: 'source', pathMatch: 'full' }
+];
 
 const routes: Routes = [
     { path: 'home', component: IndexhtmlComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: 'management', component: ManagementComponent, canActivate: [LoginGuard] }
+    {
+        path: 'management', component: ManagementComponent,
+        children:
+            mgtChildrenRoutes,
+        canActivate: [LoginGuard],
+    }
 
 ];
 @NgModule({
@@ -24,7 +37,9 @@ const routes: Routes = [
         IndexhtmlComponent,
         LoginComponent,
         ManagementComponent,
-        ExitComponent
+        ExitComponent,
+        UserComponent,
+        SourceComponent
     ],
     imports: [
         BrowserModule,

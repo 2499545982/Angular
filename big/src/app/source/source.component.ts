@@ -3,14 +3,15 @@ import { ExitComponent } from '../exit/exit.component';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../source/user';
+import { User } from './user';
 @Component({
-    selector: 'app-management',
-    templateUrl: './management.component.html',
-    styleUrls: ['./management.component.css']
+    selector: 'app-source',
+    templateUrl: './source.component.html',
+    styleUrls: ['./source.component.css']
 })
-export class ManagementComponent implements OnInit
+export class SourceComponent implements OnInit
 {
+
     exit: ExitComponent;
     myForm: FormGroup;
     userName: AbstractControl;
@@ -61,7 +62,7 @@ export class ManagementComponent implements OnInit
                     alert('添加成功!');
                 }
             });
-            this.ngOnInit();
+        this.ngOnInit();
         // location.reload();
     }
 

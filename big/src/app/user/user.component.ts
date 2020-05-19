@@ -5,19 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../source/user';
 @Component({
-    selector: 'app-management',
-    templateUrl: './management.component.html',
-    styleUrls: ['./management.component.css']
+    selector: 'app-user',
+    templateUrl: './user.component.html',
+    styleUrls: ['./user.component.css']
 })
-export class ManagementComponent implements OnInit
+export class UserComponent implements OnInit
 {
+
     exit: ExitComponent;
     myForm: FormGroup;
     userName: AbstractControl;
     id: AbstractControl;
     password: AbstractControl;
     users$: Observable<User>;
-    baseUrl = 'http://127.0.0.1:8080/';
+    baseUrl = 'http://127.0.0.1:8000/';
     currentUser: User;
 
     constructor(private fb: FormBuilder, private httpClient: HttpClient)
@@ -61,7 +62,7 @@ export class ManagementComponent implements OnInit
                     alert('添加成功!');
                 }
             });
-            this.ngOnInit();
+        this.ngOnInit();
         // location.reload();
     }
 
@@ -118,5 +119,4 @@ export class ManagementComponent implements OnInit
     {
         this.exit.logout();
     }
-
 }
