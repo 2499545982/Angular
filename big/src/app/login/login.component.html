@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center">
+    <div class="d-flex align-items-center login-content">
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+            <h3 class="d-flex justify-content-center">用户登陆</h3>
+            <p *ngIf="myForm.invalid" class="text-danger">表单无效</p>
+            <p>{{name$|async}}</p>
+            <div class="form-group">
+                <label for="userName">用户名</label>
+                <input type="text" class="form-control" id="userName" aria-describedby="输入用户名" name="userName"
+                    [ngClass]="{'is-invalid':userName.invalid ,'is-valid':userName.valid}" [formControl]="userName">
+                <div class="valid-feedback">
+                    用户名格式正确
+                </div>
+                <div class="invalid-feedback">
+                    <span *ngIf="userName.hasError('required')">
+                        用户名不可用
+                    </span>
+                    <span *ngIf="!userName.hasError('required') && userName.hasError('invalidUser')">
+                        用户名必须以a开头
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" class="form-control"
+                    [ngClass]="{'is-invalid':password.invalid ,'is-valid':password.valid }" id="password"
+                    name="password" [formControl]="password">
+                <div class="valid-feedback">
+                    密码可用
+                </div>
+                <div class="invalid-feedback">
+                    密码必须>5位
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" [ngClass]="{'disabled':myForm.invalid}"
+                [disabled]="myForm.invalid" [routerLink]="['/management']" (click)='login()' >提交</button>
+        </form>
+    </div>
+</div>

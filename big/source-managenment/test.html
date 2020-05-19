@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS异步处理</title>
+    <script src="https://unpkg.com/rxjs/bundles/rxjs.umd.min.js"></script>
+    <script>
+        console.log('创建承诺前');
+        const p1 = new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve('Promise定时器结束!');
+            }, 500);
+        });
+        console.log('创建承诺后');
+
+        p1.then(val => {
+            console.log(val);
+        }).catch(err => {
+            console.log(err);
+        });
+        console.log('承诺代码处理后');
+
+        console.log('定义返回Promise的函数');
+        function func1() {
+            console.log('进入func1');
+            return new Promise((resolve, reject) => {
+                setTimeout(function () {
+                    resolve('异步函数方式的Promise');
+                }, 1000);
+                console.log('func1 定时器设置完毕');
+            });
+        }
+
+        async function func2() {
+            console.log('进入func2');
+            const val = await func1();
+            console.log('func2' + val);
+        }
+
+        func2();
+
+        console.log('开始定义可观察对象');
+        const obj1 = rxjs.Observable.create((o) => {
+            let index = 0;
+            let myTimer = setInterval(function () {
+                o.next('可观察对象：' + index);
+                index++;
+
+                if (index >= 10) {
+                    clearInterval(myTimer);
+                    o.complete();
+                }
+            }, 300);
+        });
+
+        obj1.subscribe(
+            (val) => {
+                console.log(val);
+            },
+            (err) => {
+                console.log(err);
+            },
+            () => {
+                console.log('结束了');
+            }
+        );
+
+        function getUsers() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "http://127.0.0.1:8080/users", true);
+            xhttp.send();
+        }
+
+        function addUser() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("POST", "http://127.0.0.1:8080/user", true);
+            const user = {
+                id: document.getElementById('id').value,
+                userName: document.getElementById('userName').value,
+                password: document.getElementById('password').value
+            };
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send(JSON.stringify(user));
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <form>
+        <input type="text" id="id" name="id" placeholder="输入用户ID">
+        <input type="text" id="userName" name="userName" placeholder="输入用户名">
+        <input type="password" id="password" name="password" placeholder="输入密码">
+        <input type="button" onclick="addUser()" value="添加用户">
+    </form>
+
+    <input type="button" onclick="getUsers()" value="获取用户">
+    <div id="demo">
+
+    </div>
+</body>
+
+</html>

@@ -29,7 +29,6 @@ const routes: Routes = [
             mgtChildrenRoutes,
         canActivate: [LoginGuard],
     }
-
 ];
 
 

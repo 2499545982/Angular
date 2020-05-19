@@ -1,0 +1,96 @@
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <div class="navbar-brand col-sm-3 col-md-2 mr-0">
+        <div class="m-auto" style="width: 100%;">
+            学生成绩管理
+        </div>
+    </div>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" [routerLink]="['/']" (onclick)="logout()">Sign out</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <div style="width: 60%;height: 40px;" class="m-auto">
+                            <button type="button" class="btn btn-success" style="width: 100%;"
+                                (click)="search()">查</button>
+                        </div>
+                    </li>
+                    <br>
+                    <li class="nav-item">
+                        <div class="m-auto" style="width: 60%;height: 40px;">
+                            <button type="button" class="btn btn-primary" style="width: 100%;"
+                                (click)="add()">增</button>
+                        </div>
+                    </li>
+                    <br>
+                    <li class="nav-item">
+                        <div style="width: 60%;height: 40px;" class="m-auto">
+                            <button type="button" class="btn btn-danger" style="width: 100%;"
+                                (click)="delete()">删</button>
+                        </div>
+                    </li>
+                    <br>
+                    <li class="nav-item">
+                        <div style="width: 60%;height: 40px;" class="m-auto">
+                            <button type="button" class="btn btn-warning" style="width: 100%;"
+                                (click)="update()">改</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="table-responsive">
+                <div class="m-auto" style="width: 75%;">
+                    <form [formGroup]="myForm">
+                        <div class="form-group">
+                            <label for="id">学号</label>
+                            <input type="text" class="form-control" id="id" name="id" [formControl]='id'>
+                        </div>
+                        <div class="form-group">
+                            <label for="userName">用户名</label>
+                            <input type="text" class="form-control" id="userName" name="userName"
+                                [formControl]='userName'>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">成绩</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                [formControl]='password'>
+                        </div>
+                    </form>
+                    <!-- <div>
+                        <button type="button" class="btn btn-primary" (click)="search()">查询</button>
+                    <button type="button" class="btn btn-success" (click)="add()">添加</button>
+                    <button type="button" class="btn btn-danger" (click)="delete()">删除</button>
+                    <button type="button" class="btn btn-warning" (click)="update()">修改</button>
+                </div> -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">学号</th>
+                                <th scope="col">姓名</th>
+                                <th scope="col">成绩</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let user of users$ | async;let i = index' (click)="select(user)">
+                                <th scope="row">{{i}}</th>
+                                <td>{{user.id}}</td>
+                                <td>{{user.userName}}</td>
+                                <td>{{user.password}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
