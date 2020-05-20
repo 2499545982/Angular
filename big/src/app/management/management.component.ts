@@ -47,6 +47,8 @@ export class ManagementComponent implements OnInit
         {
             this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
         }
+        this.ngOnInit();
+        this.reset();
         // location.reload();
     }
 
@@ -59,9 +61,10 @@ export class ManagementComponent implements OnInit
                 if (val.succ)
                 {
                     alert('添加成功!');
+                    this.reset();
+                    this.ngOnInit();
                 }
             });
-            this.ngOnInit();
         // location.reload();
     }
 
@@ -85,11 +88,11 @@ export class ManagementComponent implements OnInit
                     if (val.succ)
                     {
                         alert('删除成功！');
+                        this.ngOnInit();
+                        this.reset();
                     }
-                }
-            )
+                });
         }
-        this.ngOnInit();
         // location.reload();
     }
 
@@ -107,13 +110,21 @@ export class ManagementComponent implements OnInit
                     if (val.succ)
                     {
                         alert('修改成功！');
+                        this.ngOnInit();
+                        this.reset();
                     }
-                }
-            )
+                });
         }
-        this.ngOnInit();
         // location.reload();
     }
+
+    reset()
+    {
+        this.myForm.controls['id'].reset();
+        this.myForm.controls['userName'].reset();
+        this.myForm.controls['password'].reset();
+    }
+
     logout()
     {
         this.exit.logout();

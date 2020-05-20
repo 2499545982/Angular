@@ -11,14 +11,13 @@ import { User } from '../source/user';
 })
 export class UserComponent implements OnInit
 {
-
     exit: ExitComponent;
     myForm: FormGroup;
     userName: AbstractControl;
     id: AbstractControl;
     password: AbstractControl;
     users$: Observable<User>;
-    baseUrl = 'http://127.0.0.1:8000/';
+    baseUrl = 'http://127.0.0.1:8080/';
     currentUser: User;
 
     constructor(private fb: FormBuilder, private httpClient: HttpClient)
@@ -36,34 +35,38 @@ export class UserComponent implements OnInit
 
     ngOnInit(): void
     {
-        this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
+        this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin');
     }
 
     search()
     {
+        console.log(this.myForm.value);
         if (this.id.value)
         {
-            this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users/' + this.id.value);
+            this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin/' + this.id.value);
         } else
         {
-            this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
+            this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin');
         }
+        this.reset();
         // location.reload();
     }
 
     add()
     {
         console.log(this.myForm.value);
-        this.httpClient.post(this.baseUrl + 'user', this.myForm.value).subscribe(
+        this.httpClient.post(this.baseUrl + 'admin', this.myForm.value).subscribe(
             (val: any) =>
             {
                 if (val.succ)
                 {
                     alert('添加成功!');
                 }
+                this.ngOnInit();
+                this.reset();
             });
-        this.ngOnInit();
         // location.reload();
+
     }
 
     select(u: User)
@@ -80,17 +83,17 @@ export class UserComponent implements OnInit
         }
         else
         {
-            this.httpClient.delete(this.baseUrl + 'user/' + this.currentUser.id).subscribe(
+            this.httpClient.delete(this.baseUrl + 'admin/' + this.currentUser.id).subscribe(
                 (val: any) =>
                 {
                     if (val.succ)
                     {
                         alert('删除成功！');
                     }
-                }
-            )
+                    this.ngOnInit();
+                    this.reset();
+                });
         }
-        this.ngOnInit();
         // location.reload();
     }
 
@@ -102,19 +105,27 @@ export class UserComponent implements OnInit
         }
         else
         {
-            this.httpClient.put(this.baseUrl + 'user', this.myForm.value).subscribe(
+            this.httpClient.put(this.baseUrl + 'admin', this.myForm.value).subscribe(
                 (val: any) =>
                 {
                     if (val.succ)
                     {
                         alert('修改成功！');
                     }
-                }
-            )
+                    this.ngOnInit();
+                    this.reset();
+                });
         }
-        this.ngOnInit();
         // location.reload();
     }
+
+    reset()
+    {
+        this.myForm.controls['id'].reset();
+        this.myForm.controls['userName'].reset();
+        this.myForm.controls['password'].reset();
+    }
+
     logout()
     {
         this.exit.logout();

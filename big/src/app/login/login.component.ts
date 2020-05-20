@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit
     password: AbstractControl;
     a1: number;
     a2: number;
-    baseUrl = 'http://127.0.0.1:8000/';
+    baseUrl = 'http://127.0.0.1:8080/';
     onSubmit(value: any)
     {
         console.log(value);
@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit
         this.a1 = 0;
         this.a2 = 0;
         this.myForm = this.fb.group({
-            'userName': ['asdasd', Validators.compose([Validators.required, pd])],
-            'password': ['asdasd', Validators.compose([Validators.required, Validators.minLength(4)])]
+            'userName': ['admin', Validators.compose([Validators.required, pd])],
+            'password': ['admin', Validators.compose([Validators.required, Validators.minLength(4)])]
         });
 
         this.userName = this.myForm.controls['userName'];
