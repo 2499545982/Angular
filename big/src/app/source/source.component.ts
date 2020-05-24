@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ExitComponent } from '../exit/exit.component';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './user';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { isObject } from 'util';
 @Component({
     selector: 'app-source',
     templateUrl: './source.component.html',
@@ -16,27 +19,59 @@ export class SourceComponent implements OnInit
     myForm: FormGroup;
     userName: AbstractControl;
     id: AbstractControl;
-    password: AbstractControl;
+    source: AbstractControl;
     users$: Observable<User>;
     baseUrl = 'http://127.0.0.1:8080/';
     currentUser: User;
-
-    constructor(private fb: FormBuilder, private httpClient: HttpClient)
+    modalRef: BsModalRef;
+    constructor(private fb: FormBuilder, private httpClient: HttpClient, private modalService: BsModalService)
     {
         this.myForm = this.fb.group({
             'userName': [''],
-            'password': [''],
+            'source': [''],
             'id': ['']
         });
 
         this.userName = this.myForm.controls['userName'];
         this.id = this.myForm.controls['id'];
-        this.password = this.myForm.controls['password'];
+        this.source = this.myForm.controls['source'];
     }
 
     ngOnInit(): void
     {
+        this.reset();
         this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
+    }
+
+    pd(): any
+    {
+        this.id = this.myForm.controls['id'];
+        this.userName = this.myForm.controls['userName'];
+        this.source = this.myForm.controls['source'];
+        console.log(this.id.value);
+        try
+        {
+            if (this.id.value == '' || this.id.value == null)
+            {
+                alert('id不允许为空');
+                return false;
+            }
+            if (this.userName.value == '')
+            {
+                alert('学生姓名不允许为空');
+                return false;
+            }
+            if ((this.source.value > 100 || this.source.value < 0) && this.source.value != '')
+            {
+                alert('成绩只能在0-100之间');
+                return false;
+            }
+        } catch (error)
+        {
+            alert('一般错误');
+            return false;
+        }
+        return true;
     }
 
     search()
@@ -52,16 +87,16 @@ export class SourceComponent implements OnInit
 
     add()
     {
-        console.log(this.myForm.value);
-        this.httpClient.post(this.baseUrl + 'user', this.myForm.value).subscribe(
-            (val: any) =>
-            {
-                if (val.succ)
+        if (this.pd())
+            this.httpClient.post(this.baseUrl + 'user', this.myForm.value).subscribe(
+                (val: any) =>
                 {
-                    alert('添加成功!');
-                    this.ngOnInit();
-                }
-            });
+                    if (val.succ)
+                    {
+                        alert('添加成功!');
+                        this.ngOnInit();
+                    }
+                });
     }
 
     select(u: User)
@@ -70,45 +105,52 @@ export class SourceComponent implements OnInit
         this.myForm.setValue(this.currentUser);
     }
 
-    delete()
+    delete(id: number)
     {
-        if (!this.currentUser)
-        {
-            alert('必须选择用户！');
-        }
-        else
-        {
-            this.httpClient.delete(this.baseUrl + 'user/' + this.currentUser.id).subscribe(
-                (val: any) =>
+        console.log(id);
+        this.httpClient.delete(this.baseUrl + 'user/' + id).subscribe(
+            (val: any) =>
+            {
+                console.log(val);
+                if (val.succ)
                 {
-                    if (val.succ)
-                    {
-                        alert('删除成功！');
-                        this.ngOnInit();
-                    }
+                    alert('删除成功！');
+                    this.ngOnInit();
                 }
-            )
-        }
+            }
+        )
     }
 
     update()
     {
         if (!this.currentUser)
         {
-            alert('必须选择用户！');
+            alert('必须选择用户!');
         }
         else
         {
-            this.httpClient.put(this.baseUrl + 'user', this.myForm.value).subscribe(
-                (val: any) =>
-                {
-                    if (val.succ)
+            if (this.pd())
+                this.httpClient.put(this.baseUrl + 'user', this.myForm.value).subscribe(
+                    (val: any) =>
                     {
-                        alert('修改成功！');
-                        this.ngOnInit();
+                        if (val.succ)
+                        {
+                            alert('修改成功!');
+                            this.ngOnInit();
+                        }
                     }
-                }
                 )
-            }
+        }
+    }
+
+    reset(): void
+    {
+        this.myForm.controls['id'].reset();
+
+    }
+
+    openModal(template: TemplateRef<any>)
+    {
+        this.modalRef = this.modalService.show(template);
     }
 }

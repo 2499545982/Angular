@@ -12,7 +12,7 @@ import { AuthService } from './auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './user/user.component';
 import { SourceComponent } from './source/source.component';
-
+import {ModalModule} from 'ngx-bootstrap/modal';
 const mgtChildrenRoutes: Routes = [
     { path: 'user', component: UserComponent },
     { path: 'source', component: SourceComponent },
@@ -46,7 +46,8 @@ const routes: Routes = [
         RouterModule.forRoot(routes),
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        ModalModule.forRoot()
     ],
     providers: [LoginGuard, AuthService],
     bootstrap: [AppComponent]

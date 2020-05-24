@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ExitComponent } from '../exit/exit.component';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../source/user';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',
@@ -11,7 +12,6 @@ import { User } from '../source/user';
 })
 export class UserComponent implements OnInit
 {
-    exit: ExitComponent;
     myForm: FormGroup;
     userName: AbstractControl;
     id: AbstractControl;
@@ -19,8 +19,8 @@ export class UserComponent implements OnInit
     users$: Observable<User>;
     baseUrl = 'http://127.0.0.1:8080/';
     currentUser: User;
-
-    constructor(private fb: FormBuilder, private httpClient: HttpClient)
+    modalRef: BsModalRef;
+    constructor(private fb: FormBuilder, private httpClient: HttpClient, private modalService: BsModalService)
     {
         this.myForm = this.fb.group({
             'userName': [''],
@@ -35,7 +35,35 @@ export class UserComponent implements OnInit
 
     ngOnInit(): void
     {
+        this.reset();
         this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin');
+    }
+
+    pd(): any
+    {
+        this.userName = this.myForm.controls['userName'];
+        this.password = this.myForm.controls['password'];
+        try {
+            if (this.userName.value == '')
+            {
+                alert('用户名不允许为空');
+                return false;
+            }
+            if (this.password.value == '')
+            {
+                alert('密码不允许为空');
+                return false;
+            }
+            if (this.password.value.length < 4)
+            {
+                alert('密码长度不能小于4位');
+                return false;
+            }
+        } catch (error) {
+            alert('一般错误');
+            return false;
+        }
+        return true;
     }
 
     search()
@@ -49,24 +77,21 @@ export class UserComponent implements OnInit
             this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin');
         }
         this.reset();
-        // location.reload();
     }
 
     add()
     {
         console.log(this.myForm.value);
-        this.httpClient.post(this.baseUrl + 'admin', this.myForm.value).subscribe(
-            (val: any) =>
-            {
-                if (val.succ)
+        if (this.pd())
+            this.httpClient.post(this.baseUrl + 'admin', this.myForm.value).subscribe(
+                (val: any) =>
                 {
-                    alert('添加成功!');
-                }
-                this.ngOnInit();
-                this.reset();
-            });
-        // location.reload();
-
+                    if (val.succ)
+                    {
+                        alert('添加成功!');
+                    }
+                    this.ngOnInit();
+                });
     }
 
     select(u: User)
@@ -75,26 +100,17 @@ export class UserComponent implements OnInit
         this.myForm.setValue(this.currentUser);
     }
 
-    delete()
+    delete(id: number)
     {
-        if (!this.currentUser)
-        {
-            alert('必须选择用户！');
-        }
-        else
-        {
-            this.httpClient.delete(this.baseUrl + 'admin/' + this.currentUser.id).subscribe(
-                (val: any) =>
+        this.httpClient.delete(this.baseUrl + 'admin/' + id).subscribe(
+            (val: any) =>
+            {
+                if (val.succ)
                 {
-                    if (val.succ)
-                    {
-                        alert('删除成功！');
-                    }
-                    this.ngOnInit();
-                    this.reset();
-                });
-        }
-        // location.reload();
+                    alert('删除成功！');
+                }
+                this.ngOnInit();
+            });
     }
 
     update()
@@ -105,29 +121,31 @@ export class UserComponent implements OnInit
         }
         else
         {
-            this.httpClient.put(this.baseUrl + 'admin', this.myForm.value).subscribe(
-                (val: any) =>
-                {
-                    if (val.succ)
+            if (this.pd())
+                this.httpClient.put(this.baseUrl + 'admin', this.myForm.value).subscribe(
+                    (val: any) =>
                     {
-                        alert('修改成功！');
-                    }
-                    this.ngOnInit();
-                    this.reset();
-                });
+                        if (val.succ)
+                        {
+                            alert('修改成功！');
+                        }
+                        this.ngOnInit();
+                    });
         }
-        // location.reload();
     }
 
-    reset()
+    reset(): void
     {
         this.myForm.controls['id'].reset();
         this.myForm.controls['userName'].reset();
         this.myForm.controls['password'].reset();
     }
 
-    logout()
+    openModal(template: TemplateRef<any>)
     {
-        this.exit.logout();
+        this.modalRef = this.modalService.show(template);
     }
+
+
+
 }

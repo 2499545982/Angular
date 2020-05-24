@@ -1,51 +1,99 @@
 <div class="table-responsive">
+    <br>
+    <br>
     <div class="m-auto" style="width: 75%;">
         <form [formGroup]="myForm">
             <div class="form-group">
                 <label for="id">学号</label>
                 <input type="text" class="form-control" id="id" name="id" [formControl]='id'>
-            </div>
-            <div class="form-group">
-                <label for="userName">姓名</label>
-                <input type="text" class="form-control" id="userName" name="userName" [formControl]='userName'>
-            </div>
-            <div class="form-group">
-                <label for="password">成绩</label>
-                <input type="number" class="form-control" id="password" name="password" [formControl]='password'>
+                <br>
+                <button type="button" class="btn btn-primary" style="width: 100%;" (click)="search()">查询</button>
             </div>
         </form>
-        <div class="container">
-            <div class="row row-cols-4">
-                <div class="col">
-                    <button type="button" class="btn btn-primary" style="width: 100%;" (click)="search()">查询</button>
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-success" style="width: 100%;" (click)="add()">添加</button>
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-danger" style="width: 100%;" (click)="delete()">删除</button>
-                </div>
-                <div class="col">
-                    <button type="button" class="btn btn-warning" style="width: 100%;" (click)="update()">修改</button>
-                </div>
-            </div>
-        </div>
         <br>
+        <button type="button" class="btn btn-success" style="width: 100%;" (click)="openModal(template1)">添加</button>
+        <br>
+        <br><br><br>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">学号</th>
                     <th scope="col">姓名</th>
                     <th scope="col">成绩</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor='let user of users$ | async;let i = index' (click)="select(user)">
                     <td>{{user.id}}</td>
                     <td>{{user.userName}}</td>
-                    <td>{{user.password}}</td>
+                    <td>{{user.source}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" style="width: 100%;"
+                            (click)="openModal(template2)">修改</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" style="width: 100%;" (click)="delete(user.id)">删除</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<ng-template #template1>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">添加成绩信息</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="myForm">
+            <div class="form-group">
+                <label for="id">学号</label>
+                <input type="number" class="form-control" id="id" name="id" [formControl]='id'>
+            </div>
+            <div class="form-group">
+                <label for="userName">姓名</label>
+                <input type="text" class="form-control" id="userName" name="userName" [formControl]='userName'>
+            </div>
+            <div class="form-group">
+                <label for="source">成绩</label>
+                <input type="number" class="form-control" id="source" name="source" [formControl]='source'>
+            </div>
+            <div class="m-auto" style="width: 70%;">
+                <button type="button" style="width: 100%;" class="btn btn-primary" (click)="add()">submit</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #template2>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">修改成绩信息</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="myForm">
+            <div class="form-group">
+                <label for="id">学号</label>
+                <input type="number" class="form-control" id="id" name="id" [formControl]='id' readonly="true">
+            </div>
+            <div class="form-group">
+                <label for="userName">姓名</label>
+                <input type="text" class="form-control" id="userName" name="userName" [formControl]='userName'>
+            </div>
+            <div class="form-group">
+                <label for="source">成绩</label>
+                <input type="number" class="form-control" id="source" name="source" [formControl]='source'>
+            </div>
+            <div class="m-auto" style="width: 70%;">
+                <button type="button" style="width: 100%;" class="btn btn-primary" (click)="update()">submit</button>
+            </div>
+        </form>
+    </div>
+</ng-template>

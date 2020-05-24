@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const USERS = [
-    { id: '01', userName: 'admin', password: '123456' },
-    { id: '02', userName: 'aaa', password: '456789' }
+    { id: '01', userName: '王宇弘', source: '100' },
+    { id: '02', userName: 'syd', source: '90' }
 ];
 
 let index = 1;
@@ -48,9 +48,11 @@ app.get('/users/:id', function (req, resp)
         if (user.id === id)
         {
             resp.send([user]);
-            break;
+            resp.end();
+            return;
         }
     }
+    resp.send({succ:false});
     resp.end();
 });
 
@@ -95,7 +97,7 @@ app.delete('/user/:id', function (req, resp)
     let index = 0;
     for (let user of USERS)
     {
-        if (user.id === req.params.id)
+        if (user.id == req.params.id)
         {
             USERS.splice(index, 1)
             founded = true;
