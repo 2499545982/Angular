@@ -48,7 +48,6 @@ export class SourceComponent implements OnInit
         {
             this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
         }
-        // location.reload();
     }
 
     add()
@@ -60,10 +59,9 @@ export class SourceComponent implements OnInit
                 if (val.succ)
                 {
                     alert('添加成功!');
+                    this.ngOnInit();
                 }
             });
-        this.ngOnInit();
-        // location.reload();
     }
 
     select(u: User)
@@ -86,12 +84,11 @@ export class SourceComponent implements OnInit
                     if (val.succ)
                     {
                         alert('删除成功！');
+                        this.ngOnInit();
                     }
                 }
             )
         }
-        this.ngOnInit();
-        // location.reload();
     }
 
     update()
@@ -108,16 +105,10 @@ export class SourceComponent implements OnInit
                     if (val.succ)
                     {
                         alert('修改成功！');
+                        this.ngOnInit();
                     }
                 }
-            )
-        }
-        this.ngOnInit();
-        // location.reload();
+                )
+            }
     }
-    logout()
-    {
-        this.exit.logout();
-    }
-
 }

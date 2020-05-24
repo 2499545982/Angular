@@ -157,7 +157,6 @@ app.post('/check', function (req, resp)
     {
         if (user.userName === req.body.userName && user.password === req.body.password)
         {
-            founded = true;
             resp.send({ succ: 'true' });
             resp.end();
             return;
