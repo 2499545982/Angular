@@ -153,7 +153,6 @@ app.post('/admin', function (req, resp)
 
 app.post('/check', function (req, resp)
 {
-    let founded = false;
     for (let user of admin)
     {
         if (user.userName === req.body.userName && user.password === req.body.password)
