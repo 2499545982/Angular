@@ -137,9 +137,11 @@ app.get('/admin/:id', function (req, resp)
         if (user.id === id)
         {
             resp.send([user]);
-            break;
+            resp.end();
+            return;
         }
     }
+    resp.send({succ:false});
     resp.end();
     flush();
 });

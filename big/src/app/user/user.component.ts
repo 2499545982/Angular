@@ -43,7 +43,8 @@ export class UserComponent implements OnInit
     {
         this.userName = this.myForm.controls['userName'];
         this.password = this.myForm.controls['password'];
-        try {
+        try
+        {
             if (this.userName.value == '')
             {
                 alert('用户名不允许为空');
@@ -59,7 +60,8 @@ export class UserComponent implements OnInit
                 alert('密码长度不能小于4位');
                 return false;
             }
-        } catch (error) {
+        } catch (error)
+        {
             alert('一般错误');
             return false;
         }
@@ -71,7 +73,15 @@ export class UserComponent implements OnInit
         console.log(this.myForm.value);
         if (this.id.value)
         {
-            this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin/' + this.id.value);
+            this.httpClient.post(this.baseUrl + 'admin', this.id.value).subscribe(
+                (val: any) =>
+                {
+                    if (!val.succ)
+                    {
+                        alert('id不存在!');
+                    } else
+                        this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin/' + this.id.value);
+                });
         } else
         {
             this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'admin');
@@ -136,9 +146,14 @@ export class UserComponent implements OnInit
 
     reset(): void
     {
-        this.myForm.controls['id'].reset();
-        this.myForm.controls['userName'].reset();
-        this.myForm.controls['password'].reset();
+        try
+        {
+            this.myForm.controls['id'].reset();
+            this.myForm.controls['userName'].reset();
+            this.myForm.controls['password'].reset();
+        } catch (error)
+        {
+        }
     }
 
     openModal(template: TemplateRef<any>)

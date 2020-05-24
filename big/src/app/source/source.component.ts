@@ -78,7 +78,15 @@ export class SourceComponent implements OnInit
     {
         if (this.id.value)
         {
-            this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users/' + this.id.value);
+            this.httpClient.post(this.baseUrl + 'users', this.id.value).subscribe(
+                (val: any) =>
+                {
+                    if (!val.succ)
+                    {
+                        alert('id不存在!');
+                    } else
+                        this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users/' + this.id.value);
+                });
         } else
         {
             this.users$ = <Observable<User>>this.httpClient.get(this.baseUrl + 'users');
@@ -139,14 +147,20 @@ export class SourceComponent implements OnInit
                             this.ngOnInit();
                         }
                     }
-                )
+                );
         }
     }
 
     reset(): void
     {
-        this.myForm.controls['id'].reset();
-
+        try
+        {
+            this.myForm.controls['id'].reset();
+            this.myForm.controls['userName'].reset();
+            this.myForm.controls['source'].reset();
+        } catch (error)
+        {
+        }
     }
 
     openModal(template: TemplateRef<any>)
