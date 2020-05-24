@@ -147,7 +147,7 @@ app.post('/admin', function (req, resp)
 });
 
 //添加用户
-app.post('/admin', function (req, resp)
+app.post('/adminadd', function (req, resp)
 {
     admin.push(req.body);
     resp.send({ succ: true });

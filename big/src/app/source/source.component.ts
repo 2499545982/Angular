@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { User } from './user';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { isObject } from 'util';
 @Component({
     selector: 'app-source',
     templateUrl: './source.component.html',
@@ -103,6 +102,7 @@ export class SourceComponent implements OnInit
                     if (val.succ)
                     {
                         alert('添加成功!');
+                        this.modalRef.hide();
                         this.ngOnInit();
                     }
                 });
@@ -145,6 +145,7 @@ export class SourceComponent implements OnInit
                         if (val.succ)
                         {
                             alert('修改成功!');
+                            this.modalRef.hide();
                             this.ngOnInit();
                         }
                     }

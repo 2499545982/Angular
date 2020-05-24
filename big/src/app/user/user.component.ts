@@ -94,12 +94,13 @@ export class UserComponent implements OnInit
     {
         console.log(this.myForm.value);
         if (this.pd())
-            this.httpClient.post(this.baseUrl + 'admin', this.myForm.value).subscribe(
+            this.httpClient.post(this.baseUrl + 'adminadd', this.myForm.value).subscribe(
                 (val: any) =>
                 {
                     if (val.succ)
                     {
                         alert('添加成功!');
+                        this.modalRef.hide();
                     }
                     this.ngOnInit();
                 });
@@ -138,7 +139,11 @@ export class UserComponent implements OnInit
                     {
                         if (val.succ)
                         {
-                            alert('修改成功！');
+                            alert('修改成功!');
+                            this.modalRef.hide();
+                        } else
+                        {
+                            alert('修改失败!');
                         }
                         this.ngOnInit();
                     });
