@@ -78,9 +78,10 @@ export class SourceComponent implements OnInit
     {
         if (this.id.value)
         {
-            this.httpClient.post(this.baseUrl + 'users', this.id.value).subscribe(
+            this.httpClient.post(this.baseUrl + 'users/', this.id.value).subscribe(
                 (val: any) =>
                 {
+                    console.log(val);
                     if (!val.succ)
                     {
                         alert('id不存在!');

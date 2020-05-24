@@ -76,6 +76,7 @@ export class UserComponent implements OnInit
             this.httpClient.post(this.baseUrl + 'admin', this.id.value).subscribe(
                 (val: any) =>
                 {
+                    console.log(val);
                     if (!val.succ)
                     {
                         alert('id不存在!');

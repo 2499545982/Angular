@@ -20,3 +20,5 @@ Homework  of  Angular
 
 5-17 ex07 ex08 done !
 
+5-24 big work doen and End
+

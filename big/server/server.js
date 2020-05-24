@@ -39,10 +39,10 @@ app.get('/users', function (req, resp)
     resp.end();
 });
 
-app.get('/users/:id', function (req, resp)
+app.post('/users', function (req, resp)
 {
-    console.log(req.params);
-    const id = req.params.id;
+    console.log(req.body);
+    const id = req.body.id;
     for (let user of USERS)
     {
         if (user.id === id)
@@ -52,7 +52,7 @@ app.get('/users/:id', function (req, resp)
             return;
         }
     }
-    resp.send({succ:false});
+    resp.send({ succ: false });
     resp.end();
 });
 
@@ -128,10 +128,10 @@ app.get('/admin', function (req, resp)
     resp.end();
 });
 
-app.get('/admin/:id', function (req, resp)
+app.post('/admin', function (req, resp)
 {
-    console.log(req.params);
-    const id = req.params.id;
+    console.log(req.body);
+    const id = req.body.id;
     for (let user of admin)
     {
         if (user.id === id)
@@ -141,7 +141,7 @@ app.get('/admin/:id', function (req, resp)
             return;
         }
     }
-    resp.send({succ:false});
+    resp.send({ succ: false });
     resp.end();
     flush();
 });
@@ -231,6 +231,6 @@ function flush()
 {
     for (let i = 0; i < admin.length; i++)
     {
-        admin[i].id = i + 1+'';
+        admin[i].id = i + 1 + '';
     }
 }
