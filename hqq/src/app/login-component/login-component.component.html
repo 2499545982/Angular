@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+    <div class="d-flex align-items-center login-content">  
+        <!-- 关联表单与ts中变量 -->
+        <form [formGroup]="myForm">
+
+            <h3 class="d-flex justify-content-center">用户登录</h3>
+            <p *ngIf="myForm.invalid" class="text-danger">表单无效！</p>
+            <p>{{name$ | async}}</p>
+            <div class="form-group">
+                <label for="userName">用户名</label>
+                <input type="text" class="form-control" id="userName" aria-describedby="输入用户名" name="userName"      
+                     [formControl]="userName" [ngClass]="{'is-invalid':userName.invalid, 'is-valid':userName.valid}">
+
+                 <div class="valid-feedback">
+                    密码填写正确
+                </div>
+                <div class="invalid-feedback">
+                     <span *ngIf="userName.hasError('required')">
+                        用户名必须填写
+                         </span>
+                     <span *ngIf="!userName.hasError('required') && userName.hasError('invalidUser')">
+                        用户名必须以a开头
+                    </span>
+                </div>
+
+
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                 <input type="password" class="form-control" id="password" name="password" [formControl]="password"    
+                       [ngClass]="{'is-invalid':password.invalid, 'is-valid':password.valid}">
+
+                <div class="valid-feedback">
+                    密码填写正确
+                </div>
+                <div class="invalid-feedback">
+                    密码必须大于5位
+                </div>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" [disabled]="myForm.invalid">
+                <label class="form-check-label" for="exampleCheck1" style="width: 470px;">Check me out</label>
+                <a href="./zhuce.html">用户注册</a>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary btn-block" [disabled]="myForm.invalid"
+                [routerLink]="['/management']" (click)='login()'>登录</button>
+        </form>
+    </div>
+</div>
