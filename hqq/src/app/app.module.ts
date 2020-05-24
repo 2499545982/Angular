@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponentComponent } from './home-component/home-component.component';
@@ -44,7 +45,9 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes) // <---引入路由模块
+    RouterModule.forRoot(routes), // <---引入路由模块
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [LoginGuard, AuthService],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MENUS, PRODUCT } from './data';
 
 @Component({
   selector: 'app-home-component',
@@ -11,5 +12,9 @@ export class HomeComponentComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  menus = MENUS;
+
+  product = PRODUCT;
 
 }
